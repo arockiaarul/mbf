@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: MbfDataLib
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://172.20.200.158:1433;databaseName=YOUCLOUD_COMMON_AUS;encrypt=true;trustServerCertificate=true;  #useSSL=false;
+    username: sa
+    password: Contec@1234
+    hikari:
+      connection-timeout: 20000 #maximum number of milliseconds that a client will wait for a connection
+      maximum-pool-size: 500 #maximum pool size
+      minimum-idle: 10 #minimum number of idle connections maintained by HikariCP in a connection pool
+      pool-name: youcloud
+      leak-detection-threshold: 30000
+    jpa:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+server:
+  port: ${SERVER_PORT:8091}
+  servlet:
+    contextPath: /mbf
+  error:
+    path: /error
+    whitelabel:
+      enabled: false
+
+#springdoc:
+#  packagesToScan:
+#    - "com.youcloud.middleware"
+#  swagger-ui:
+#    path: /aus-pos-mv-swagger-ui.html
+#  api-docs:
+#    path: /api-docs E:\YouCloud\Vivek\mbf\src\test
+
+mbf:
+  scheduler:
+    merchant-master:
+      scheduled-time: ${SETTLEMENT_TRANSACTION_TIME:0 */5 * * * *}
+    inputFile:
+      path:  ${INPUT_FILE_PATH:"E:\\YouCloud\\Vivek\\mbf\\src\\test"}
+      scheduled-time: ${INPUT_FILE_SCHEDULED_TIME:0 20 11 * * *}
+    replyFile:
+      path:  ${REPLY_FILE_PATH:"E:\\YouCloud\\Vivek\\mbf\\src\\test"}
+      scheduled-time: ${REPLY_FILE_SCHEDULED_TIME:0 21 11 * * *}
+      response: ${REPLY_FILE_RESPONSE:DERP00012549}
+
+logging:
+  level:
+    com:
+      youcloud:
+        mbf: DEBUG

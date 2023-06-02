@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_LOCAL_URL:jdbc:postgresql://localhost:5432/cms?createDatabaseIfNotExist=true}
+    username: ${DB_LOCAL_USERNAME:postgres}
+    password: ${DB_LOCAL_PASSWORD:admin}
+  jpa:
+    hibernate.use-new-id-generator-mappings: false
+    hibernate.ddl-auto: update
+    show-sql: ${SHOW_SQL_LOCAL:true}
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: httptrace, health, metrics, info
+
+server:
+  port: ${SERVER_PORT:8087}
+  servlet:
+    contextPath: /mbf
+
+jwt:
+  secret: secret-key
+  accessTokenExpiryInMin: 120
+  refreshTokenExpiryInDay: 30
+
+cms:
+  httptrace:
+    enable: true
+
+logging:
+  level:
+    com:
+      youcloud:
+        mbf: DEBUG
+    org:
+      hibernate:
+        SQL: ${LOG_LEVEL_ORG_HIBERNATE_SQL:DEBUG}
+      springframework:
+        ws:
+          client:
+            MessageTracing:
+              received: TRACE
+              sent: TRACE
