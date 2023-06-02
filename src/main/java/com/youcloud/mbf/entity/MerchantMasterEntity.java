@@ -10,16 +10,24 @@ import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,7 +45,7 @@ public class MerchantMasterEntity {
 	@Column(name = "COMPANY_NAME", length = 100)
 	private String companyName;
 
-	@Column(name = "MID", unique = true, /*nullable = false,*/ length = 15)
+	@Column(name = "MID", unique = true, nullable = false, length = 15)
 	private String mid;
 
 	@Column(name = "ADDRESS", length = 200)
@@ -97,25 +105,25 @@ public class MerchantMasterEntity {
 	@Column(name = "TURNOVER_YEAR1", length = 4)
 	private String turnoverYear1;
 
-	@Column(name = "TURNOVER1", precision = 53, scale = 0)
+	@Column(name = "TURNOVER1", precision = 53)
 	private Double turnover1;
 
 	@Column(name = "TURNOVER_YEAR2", length = 4)
 	private String turnoverYear2;
 
-	@Column(name = "TURNOVER2", precision = 53, scale = 0)
+	@Column(name = "TURNOVER2", precision = 53)
 	private Double turnover2;
 
 	@Column(name = "TURNOVER_YEAR3", length = 4)
 	private String turnoverYear3;
 
-	@Column(name = "TURNOVER3", precision = 53, scale = 0)
+	@Column(name = "TURNOVER3", precision = 53)
 	private Double turnover3;
 
-	@Column(name = "EXPECTED_CARD_BUSINESS_PER_MONTH", precision = 53, scale = 0)
+	@Column(name = "EXPECTED_CARD_BUSINESS_PER_MONTH", precision = 53)
 	private Double expectedCardBusinessPerMonth;
 
-	@Column(name = "AVERAGE_BILL_AMOUNT", precision = 53, scale = 0)
+	@Column(name = "AVERAGE_BILL_AMOUNT", precision = 53)
 	private Double averageBillAmount;
 
 	@Column(name = "BANKER_BRANCH_NAME", length = 100)
@@ -140,7 +148,7 @@ public class MerchantMasterEntity {
 	@Column(name = "IFSC_CODE", length = 15)
 	private String ifscCode;
 
-	@Column(name = "MDR", precision = 53, scale = 0)
+	@Column(name = "MDR", precision = 53)
 	private Double mdr;
 
 	@Column(name = "POS_MACHINE_TYPE", length = 25)
@@ -149,7 +157,7 @@ public class MerchantMasterEntity {
 	@Column(name = "NO_POS_REQUIRED")
 	private Integer noPosRequired;
 
-	@Column(name = "MDR_COMMISSION", precision = 53, scale = 0)
+	@Column(name = "MDR_COMMISSION", precision = 53)
 	private Double mdrCommission;
 
 	@Column(name = "STATUS", length = 1)
@@ -209,13 +217,13 @@ public class MerchantMasterEntity {
 	@Column(name = "BUSINESS_TYPE", length = 20)
 	private String businessType;
 
-	@Column(name = "MDR_PRIMARY", precision = 53, scale = 0)
+	@Column(name = "MDR_PRIMARY", precision = 53)
 	private Double mdrPrimary;
 
-	@Column(name = "MDR_NON_PRIMARY", precision = 53, scale = 0)
+	@Column(name = "MDR_NON_PRIMARY", precision = 53)
 	private Double mdrNonPrimary;
 
-	@Column(name = "CDR_PRIMARY", precision = 53, scale = 0)
+	@Column(name = "CDR_PRIMARY", precision = 53)
 	private Double cdrPrimary;
 
 	@Column(name = "COUNTRY_CODE", length = 4)
@@ -231,13 +239,13 @@ public class MerchantMasterEntity {
 	@Column(name = "TRANS_PER_DAY")
 	private Integer transPerDay;
 
-	@Column(name = "TOT_AMT_PER_DAY", precision = 53, scale = 0)
+	@Column(name = "TOT_AMT_PER_DAY", precision = 53)
 	private Double totAmtPerDay;
 
-	@Column(name = "AMOUNT_PER_TRANS", precision = 53, scale = 0)
+	@Column(name = "AMOUNT_PER_TRANS", precision = 53)
 	private Double amountPerTrans;
 
-	@Column(name = "ALLOWED_TOT_AMT_PER_DAY", precision = 53, scale = 0)
+	@Column(name = "ALLOWED_TOT_AMT_PER_DAY", precision = 53)
 	private Double allowedTotAmtPerDay;
 
 	@Column(name = "ALLOWED_TRANS_PER_DAY")
@@ -273,7 +281,7 @@ public class MerchantMasterEntity {
 	@Column(name = "DMT_ACCOUNT_NAME", length = 50)
 	private String dmtAccountName;
 
-	@Column(name = "WALLET_BALANCE", /*nullable = false,*/ precision = 53, scale = 0)
+	@Column(name = "WALLET_BALANCE", /*nullable = false,*/ precision = 53)
 	private double walletBalance;
 
 	@Column(name = "WALLET_ACCOUNT_NO", length = 32)
@@ -302,4 +310,17 @@ public class MerchantMasterEntity {
 
 	@Column(name = "ACN", length = 11)
 	private String acn;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		MerchantMasterEntity that = (MerchantMasterEntity) o;
+		return companyId != null && Objects.equals(companyId, that.companyId);
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
 }

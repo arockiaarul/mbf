@@ -40,7 +40,7 @@ public class WriteMdfFileServiceImpl implements WriteMdfFileService {
         //Pair<MbfFileContent, List<SettlementTransaction>> pair = this.generateInputFileContent();
         final MbfFileContent mbfFileContent = this.generateInputFileContent(mbfDataEntityList);
         log.debug("<===================mbfFileContent=============>: {}", mbfFileContent);
-        if (mbfFileContent != null && !mbfFileContent.getDetailList().isEmpty()) {
+        if (mbfFileContent != null && mbfFileContent.getDetailList() != null && !mbfFileContent.getDetailList().isEmpty()) {
             final MbfFile mbfFile = MbfFile.builder()
                     .folderPath((filePath == null || filePath.isEmpty()) ? "E:\\YouCloud\\Vivek\\mbf\\src\\test" : filePath)
                     .inputFileName(mbfFileName)
@@ -58,9 +58,7 @@ public class WriteMdfFileServiceImpl implements WriteMdfFileService {
 
     private MbfFileContent generateInputFileContent(List<MbfDataEntity> mbfDataEntityList) {
         final List<String> contentList = new ArrayList<>();
-        mbfDataEntityList.forEach(mbfDataEntity -> {
-            contentList.add(mbfDataEntity.getMbf());
-        });
+        mbfDataEntityList.forEach(mbfDataEntity -> contentList.add(mbfDataEntity.getMbf()));
         log.debug("<===================contentList=============>: {}", contentList);
         final MbfFileContent mbfFileContent = MbfFileContent.builder()
                 //.header(fileHeader)

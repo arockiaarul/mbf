@@ -40,108 +40,113 @@ public class MbfDataServiceImpl implements MbfDataService {
     public List<MbfDataEntity> parseMdfDataAndSaveMerchantMaster() {
         List<MbfDataEntity> mbfDataEntityList = getActiveStatusMbfDataEntityList();
         log.info("mbfDataEntityList: {}", mbfDataEntityList);
-        mbfDataEntityList.stream().forEach(mbfDataEntity -> {
+        mbfDataEntityList.forEach(mbfDataEntity -> {
             MbfDataParser mbfDataParser = new MbfDataParser(mbfDataEntity.getMbf());
             log.info("mbfDataParser: {}", mbfDataParser);
             List<FileDetail> fileDetailList = mbfDataParser.getDetailList();
-            fileDetailList.stream().forEach(fileDetail ->  {
-                MerchantMasterEntity merchantMasterEntity = MerchantMasterEntity.builder()
-                        .abn(String.valueOf(fileDetail.getAbn()))
-                        .acn(String.valueOf(fileDetail.getAcn()))
-                        /*.accountDtOpen()
-                        .accountNo()
-                        .accountType()
-                        .address()
-                        .addressRes()
-                        .allowedTotAmtPerDay()
-                        .amountPerTrans()
-                        .applicationId()
-                        .areaCode()
-                        .authBy()
-                        .authDt()
-                        .authorizedPerson()
-                        .authStatus()*/
-                        .averageBillAmount(fileDetail.getAverageTicketOrSalesAmount())
-                        /*.bankerBranchName()
-                        .bankName()
-                        .businessHrs()
-                        .businessIncome()
-                        .businessLine()
-                        .businessType()
-                        .cdrPrimary()
-                        .cityCode()
-                        //.companyId() // pk_id field
-                        .companyName()
-                        .countryCode()
-                        .createdBy()
-                        .createdDt()
-                        .dlFlag()
-                        .dmtAccountName()
-                        .dmtAccountNo()
-                        .dmtIfscCode()*/
-                        .emailId(fileDetail.getPosVendorEmail())
-                        /*.establishmentNo()
-                        .establishmentYrs()
-                        .expectedCardBusinessPerMonth()
-                        .faxNo()*/
-                        .firstName(fileDetail.getPosVendorName())
-                        /*.groupMid()
-                        .ifscCode()
-                        .ifscNo()
-                        .isMatmWallet()
-                        .lastName()
-                        .locationBound()
-                        .matmWallet()*/
-                        .mccCode(fileDetail.getMcc())
-                        /*.mdr()
-                        .mdrCommission()
-                        .mdrNonPrimary()
-                        .merchantFrequency()
-                        .merchantToken()
-                        .mobileNo()
-                        .modifyBy()
-                        .modifyDt()
-                        .noPosRequired()
-                        .microAtmStatus()
-                        .officeNo()
-                        .officePremisesStatus()
-                        .ownerName()*/
-                        .mid(String.valueOf(fileDetail.getMerchantNumber()))
-                        /*.panTan()
-                        .posMachineType()
-                        .pinCode()*/
-                        .printedName(fileDetail.getTradingBusinessName())
-                        /*.referenceId()
-                        .remark()
-                        .saleTaxNo()
-                        .status()
-                        .terminalIssue()
-                        .tinNo()
-                        .totAmtPerDay()
-                        .transDate()
-                        .transPerDay()*/
-                        .turnover1(fileDetail.getTotalAnnualCreditTurnover())
-                        /*.turnover2()
-                        .turnover3()
-                        .turnoverYear1()
-                        .turnoverYear2()
-                        .turnoverYear3()*/
-                        .typeEstablishment(fileDetail.getTypeOfBusiness())
-                        /*.virtualAccountno()
-                        .virtualIfsccode()
-                        .walletAccountNo()
-                        .walletBalance()
-                        .walletIfscCode()
-                        .yrsCurrentLocation()*/
-                        .build();
-                //merchantMasterRepository.saveAndFlush(merchantMasterEntity);
+            /*fileDetailList.stream().forEach(fileDetail ->  {
+                MerchantMasterEntity merchantMasterEntity = getMerchantMasterEntity(fileDetail);
                 merchantMasterService.saveMerchantMaster(merchantMasterEntity);
-            });
+            });*/
 
             mbfDataEntity.setStatus(0);
         });
         mbfDataEntityList = updateMbfDataEntityList(mbfDataEntityList);
         log.info("mbfDataEntityList: {}", mbfDataEntityList);
         return mbfDataEntityList;
+    }
+
+    private MerchantMasterEntity getMerchantMasterEntity(FileDetail fileDetail) {
+        MerchantMasterEntity merchantMasterEntity = MerchantMasterEntity.builder()
+                .abn(String.valueOf(fileDetail.getAbn()))
+                .acn(String.valueOf(fileDetail.getAcn()))
+                /*.accountDtOpen()
+                .accountNo()
+                .accountType()
+                .address()
+                .addressRes()
+                .allowedTotAmtPerDay()
+                .amountPerTrans()
+                .applicationId()
+                .areaCode()
+                .authBy()
+                .authDt()
+                .authorizedPerson()
+                .authStatus()*/
+                .averageBillAmount(fileDetail.getAverageTicketOrSalesAmount())
+                /*.bankerBranchName()
+                .bankName()
+                .businessHrs()
+                .businessIncome()
+                .businessLine()
+                .businessType()
+                .cdrPrimary()
+                .cityCode()
+                //.companyId() // pk_id field
+                .companyName()
+                .countryCode()
+                .createdBy()
+                .createdDt()
+                .dlFlag()
+                .dmtAccountName()
+                .dmtAccountNo()
+                .dmtIfscCode()*/
+                .emailId(fileDetail.getPosVendorEmail())
+                /*.establishmentNo()
+                .establishmentYrs()
+                .expectedCardBusinessPerMonth()
+                .faxNo()*/
+                .firstName(fileDetail.getPosVendorName())
+                /*.groupMid()
+                .ifscCode()
+                .ifscNo()
+                .isMatmWallet()
+                .lastName()
+                .locationBound()
+                .matmWallet()*/
+                .mccCode(fileDetail.getMcc())
+                /*.mdr()
+                .mdrCommission()
+                .mdrNonPrimary()
+                .merchantFrequency()
+                .merchantToken()
+                .mobileNo()
+                .modifyBy()
+                .modifyDt()
+                .noPosRequired()
+                .microAtmStatus()
+                .officeNo()
+                .officePremisesStatus()
+                .ownerName()*/
+                .mid(String.valueOf(fileDetail.getMerchantNumber()))
+                /*.panTan()
+                .posMachineType()
+                .pinCode()*/
+                .printedName(fileDetail.getTradingBusinessName())
+                /*.referenceId()
+                .remark()
+                .saleTaxNo()
+                .status()
+                .terminalIssue()
+                .tinNo()
+                .totAmtPerDay()
+                .transDate()
+                .transPerDay()*/
+                .turnover1(fileDetail.getTotalAnnualCreditTurnover())
+                /*.turnover2()
+                .turnover3()
+                .turnoverYear1()
+                .turnoverYear2()
+                .turnoverYear3()*/
+                .typeEstablishment(fileDetail.getTypeOfBusiness())
+                /*.virtualAccountno()
+                .virtualIfsccode()
+                .walletAccountNo()
+                .walletBalance()
+                .walletIfscCode()
+                .yrsCurrentLocation()*/
+                .build();
+        log.debug("merchantMasterEntity: {}", merchantMasterEntity);
+        return merchantMasterEntity;
     }
 }
