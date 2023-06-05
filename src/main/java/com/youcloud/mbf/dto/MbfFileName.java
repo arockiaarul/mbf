@@ -25,7 +25,8 @@ public class MbfFileName {
     /**
      * Position 1 to 8 (8 chars)
      */
-    private JobId jobId;
+    @Builder.Default
+    private String jobId = "TT4220MB"; //JobId jobId;
 
     /**
      * Two character short description of the file.

@@ -27,6 +27,7 @@ public class FileHeader {
      *
      * File Type, M, MBF, 20, AN, File Type for this extract
      */
+    @Builder.Default
     private String fileType = "MBF";
 
     /**

@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
-import static com.youcloud.mbf.common.constant.MbfDataConstant.TPP_IDENTIFIER;
 import static com.youcloud.mbf.common.constant.MbfFileConstant.SENDER_CODE;
+import static com.youcloud.mbf.common.constant.MbfFileConstant.TPP_IDENTIFIER;
 
 @Data
 @Builder
@@ -16,7 +16,7 @@ import static com.youcloud.mbf.common.constant.MbfFileConstant.SENDER_CODE;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Jacksonized
-public class JobId {
+public class JobId { //TT4220MB
 
     /**
      * First 2 characters refer to the sender who sends the DE file,

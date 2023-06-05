@@ -35,12 +35,12 @@ public class WriteMdfFileServiceImpl implements WriteMdfFileService {
         log.info("************************** filePath *******************: {}", filePath);
         final JobId jobId = JobId.builder().build();
         log.debug("<===================jobId=============>: {}", jobId);
-        MbfFileName mbfFileName = MbfFileName.builder().jobId(jobId).build();
+        MbfFileName mbfFileName = MbfFileName.builder()/*.jobId(jobId)*/.build();
         log.debug("<===================mbfFileName=============>: {}", mbfFileName);
         //Pair<MbfFileContent, List<SettlementTransaction>> pair = this.generateInputFileContent();
         final MbfFileContent mbfFileContent = this.generateInputFileContent(mbfDataEntityList);
         log.debug("<===================mbfFileContent=============>: {}", mbfFileContent);
-        if (mbfFileContent != null && mbfFileContent.getDetailList() != null && !mbfFileContent.getDetailList().isEmpty()) {
+        if (mbfFileContent != null && mbfFileContent.getContentList() != null && !mbfFileContent.getContentList().isEmpty()) {
             final MbfFile mbfFile = MbfFile.builder()
                     .folderPath((filePath == null || filePath.isEmpty()) ? "E:\\YouCloud\\Vivek\\mbf\\src\\test" : filePath)
                     .inputFileName(mbfFileName)

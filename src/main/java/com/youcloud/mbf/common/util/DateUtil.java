@@ -1,8 +1,14 @@
 package com.youcloud.mbf.common.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public final class DateUtil {
 
     public static final String DD_MM_YYYY = "ddMMyyyyHHmmss";
@@ -43,5 +49,19 @@ public final class DateUtil {
         return LocalDateTime.now()
                 .withNano(0)
                 .toString();
+    }
+
+    public static Date getDate(String dateStr, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.ENGLISH);
+        try {
+            return formatter.parse(dateStr);// LocalDate.parse(dateStr, format);
+        } catch (ParseException e) {
+            log.error("ParseException :" + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    public static Date getDateInDDMMYYYY(String dateStr) {
+        return getDate(dateStr, "DDMMYYYY");
     }
 }

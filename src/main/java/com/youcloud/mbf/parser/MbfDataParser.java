@@ -5,13 +5,9 @@ import com.youcloud.mbf.dto.FileHeader;
 import com.youcloud.mbf.dto.FileTrailer;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.util.Strings;
 
 import static com.youcloud.mbf.common.constant.MbfDataConstant.DATA_SEPARATOR;
 
@@ -95,12 +91,60 @@ public class MbfDataParser {
         if (dataArrayLength >249 && totalMerchantRecords != null && detailRecords == totalMerchantRecords) {
             for (int recordCounter = 0; recordCounter < totalMerchantRecords; recordCounter++) {
                 int fieldCounter = 243 * recordCounter;
+                log.debug("detailArray[fieldCounter +32]" + detailArray[fieldCounter +32]);
                 FileDetail fileDetail = FileDetail.builder()
                         .recordType(detailArray[fieldCounter +0])
                         .merchantNumber(Long.valueOf(detailArray[fieldCounter +1]))
                         .merchantLevel(detailArray[fieldCounter +2])
-                        .parentClient(detailArray[fieldCounter +3]) //todo
-
+                        .parentClient(detailArray[fieldCounter +3])
+                        .tradingBusinessName(detailArray[fieldCounter +4])
+                        .legalName(detailArray[fieldCounter +5])
+                        .abn(Long.valueOf(detailArray[fieldCounter +6]))
+                        .acn(Long.valueOf(detailArray[fieldCounter +7]))
+                        .webAddress(detailArray[fieldCounter +8])
+                        .dcc(detailArray[fieldCounter +9])
+                        .typeOfBusiness(detailArray[fieldCounter +10])
+                        .mcc(Integer.valueOf(detailArray[fieldCounter +11]))
+                        .ecommerceEnabled(detailArray[fieldCounter +12])
+                        .tradingAddressContactName(detailArray[fieldCounter +13])
+                        .tradingAddressLine1(detailArray[fieldCounter +14])
+                        .tradingAddressLine2(detailArray[fieldCounter +15])
+                        .tradingAddressLine3(detailArray[fieldCounter +16])
+                        .tradingAddressLine4(detailArray[fieldCounter +17])
+                        .tradingAddressCity(detailArray[fieldCounter +18])
+                        .tradingAddressState(detailArray[fieldCounter +19])
+                        .tradingAddressPostcode(detailArray[fieldCounter +20])
+                        .tradingAddressCountry(detailArray[fieldCounter +21])
+                        .legalAddressContactName(detailArray[fieldCounter +22])
+                        .legalAddressLine1(detailArray[fieldCounter +23])
+                        .legalAddressLine2(detailArray[fieldCounter +24])
+                        .legalAddressLine3(detailArray[fieldCounter +25])
+                        .legalAddressLine4(detailArray[fieldCounter +26])
+                        .legalAddressCity(detailArray[fieldCounter +27])
+                        .legalAddressState(detailArray[fieldCounter +28])
+                        .legalAddressPostcode(detailArray[fieldCounter +29])
+                        .legalAddressCountry(detailArray[fieldCounter +30])
+                        .signedDate(detailArray[fieldCounter +31])
+                        .totalAnnualCashOrCreditDebitTurnover(Strings.isBlank(detailArray[fieldCounter +32]) ? null : Double.valueOf(detailArray[fieldCounter +32].trim()) )
+                        .totalAnnualCreditTurnover(Strings.isBlank(detailArray[fieldCounter +33]) ? null : Double.valueOf(detailArray[fieldCounter +33].trim()))
+                        .averageTicketOrSalesAmount(Strings.isBlank(detailArray[fieldCounter +34]) ? null : Double.valueOf(detailArray[fieldCounter +34].trim()))
+                        .captureMethod(detailArray[fieldCounter +35])
+                        .depositRequired(detailArray[fieldCounter +36])
+                        .depositPercentage(detailArray[fieldCounter +37])
+                        .averageDeliveryTimeframe(detailArray[fieldCounter +38])
+                        .recurringTran(detailArray[fieldCounter +39])
+                        .terminalType(detailArray[fieldCounter +40])
+                        .configCode(detailArray[fieldCounter +41])
+                        .termQty(Strings.isNotBlank(detailArray[fieldCounter +42]) ? Integer.valueOf(detailArray[fieldCounter +42].trim()) : null)
+                        .acquiringAusdebit(detailArray[fieldCounter +43])
+                        .acquiringVisaMasterCard(detailArray[fieldCounter +44])
+                        .acquiringAmex(detailArray[fieldCounter +45])
+                        .amexExisting(detailArray[fieldCounter +46])
+                        .amexSENumber(detailArray[fieldCounter +47])
+                        .amexNewRequired(detailArray[fieldCounter +48])
+                        .acquiringDiners(detailArray[fieldCounter +49])
+                        .dinersSENumber(detailArray[fieldCounter +50])
+                        //todo
                         .principal3State(detailArray[fieldCounter+93])
                         .principal3Postcode(detailArray[fieldCounter+94])
                         .principal3Country(detailArray[fieldCounter+95])
@@ -114,6 +158,7 @@ public class MbfDataParser {
                 fileDetailList.add(fileDetail);
             }
         }
+        log.info("<-------------------------- fileDetailList: " + fileDetailList);
         return fileDetailList;
     }
 

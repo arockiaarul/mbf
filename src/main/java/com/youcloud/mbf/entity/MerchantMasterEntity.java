@@ -30,7 +30,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Entity

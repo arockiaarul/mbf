@@ -108,7 +108,7 @@ public class FileDetail {
     /**
      * 21 Trading Address Contact Name M 35 AN Free form text
      */
-    private String tradingAddress;
+    private String tradingAddressContactName;
 
     /**
      * 22 Trading Address Line 1 M 35 AN Free form text
@@ -292,7 +292,7 @@ public class FileDetail {
      * 50 Term Qty C 1 3 N Number of devices to be on-boarded. Default to one,
      * if not provided. Based on this, Fiserv will create the TID numbers in the system
      */
-    private String termQty;
+    private Integer termQty;
 
     /**
      * 51 Acquiring Ausdebit O Drop down
@@ -1765,7 +1765,7 @@ public class FileDetail {
                 .add("typeOfBusiness='" + typeOfBusiness + "'")
                 .add("mcc='" + mcc + "'")
                 .add("ecommerceEnabled='" + ecommerceEnabled + "'")
-                .add("tradingAddress='" + tradingAddress + "'")
+                .add("tradingAddress='" + tradingAddressContactName + "'")
                 .add("tradingAddressLine1='" + tradingAddressLine1 + "'")
                 .add("tradingAddressLine2='" + tradingAddressLine2 + "'")
                 .add("tradingAddressLine3='" + tradingAddressLine3 + "'")
